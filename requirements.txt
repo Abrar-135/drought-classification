@@ -20,5 +20,8 @@ torchvision>=0.18.0
 jupyter>=1.0.0
 ipykernel>=6.29.0
 
+# Parquet I/O
+pyarrow>=16.0.0
+
 # Utilities
 tqdm>=4.66.0
