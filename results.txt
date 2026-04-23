@@ -1,0 +1,27 @@
+DROUGHT CLASSIFICATION — BASELINE RESULTS
+==========================================
+Model  : ARIMA(7, 1, 1)
+Dataset: 3108 US counties, validation split (2017-01-03 → 2018-12-31)
+         2,262,624 total predictions
+
+OVERALL
+-------
+Accuracy : 0.4851
+Macro F1 : 0.1884
+
+PER-CLASS
+---------
+Class        Precision  Recall  F1-Score   Support
+D-None (0)   0.79       0.56    0.66       1,695,001
+D0     (1)   0.19       0.34    0.24         338,184
+D1     (2)   0.11       0.20    0.14         147,175
+D2     (3)   0.05       0.09    0.07          61,124
+D3     (4)   0.02       0.05    0.02          18,991
+D4     (5)   0.00       0.01    0.00           2,149
+
+NOTES
+-----
+- ARIMA uses only past drought labels (no weather or soil features).
+- Serves as the univariate time-series baseline for LSTM and 1D-CNN comparison.
+- Counties fitted : 3108 / 3108 (0 failures)
+- Runtime         : ~16.6 minutes (12 CPU cores, parallel)
