@@ -11,7 +11,8 @@ ARIMA order (7, 1, 1):
   d=1  — one-differencing removes the long-run trend
   q=1  — one moving-average term for short-term shock correction
 
-Results are saved to processed/arima_results.csv.
+Reads flat parquet splits from ./Processed/ and writes per-county metrics to
+./Results/arima_results.csv.
 Run with --sample N to test on N counties before the full run.
 
 Usage:
@@ -34,8 +35,12 @@ warnings.filterwarnings("ignore")   # suppress ARIMA convergence noise
 
 # ── Config ─────────────────────────────────────────────────────────────────────
 ARIMA_ORDER   = (7, 1, 1)
-OUT_DIR       = Path("processed")
-RESULTS_FILE  = OUT_DIR / "arima_results.csv"
+ROOT_DIR      = Path(__file__).resolve().parent
+PROCESSED_DIR = ROOT_DIR / "Processed"
+RESULTS_DIR   = ROOT_DIR / "Results"
+TRAIN_PARQUET = PROCESSED_DIR / "train_flat.parquet"
+VAL_PARQUET   = PROCESSED_DIR / "validation_flat.parquet"
+RESULTS_FILE  = RESULTS_DIR / "arima_results.csv"
 N_JOBS        = -1          # use all CPU cores
 
 
@@ -51,7 +56,7 @@ def fit_and_forecast(fips: int,
     try:
         model  = ARIMA(train_series, order=ARIMA_ORDER)
         result = model.fit(method_kwargs={"warn_convergence": False})
-        raw    = result.forecast(steps=n_forecast)
+        raw = result.forecast(steps=n_forecast)
         # Clip and round to integer class 0-5
         preds  = np.clip(np.round(raw), 0, 5).astype(int)
         return fips, preds
@@ -62,13 +67,13 @@ def fit_and_forecast(fips: int,
 # ── Main ───────────────────────────────────────────────────────────────────────
 
 def main(sample: int | None = None):
-    OUT_DIR.mkdir(exist_ok=True)
+    RESULTS_DIR.mkdir(exist_ok=True)
 
     # ── Load only the columns we need (fips, date, label) ─────────────────────
     print("Loading label data …")
-    train_df = pd.read_parquet("processed/train_flat.parquet",
+    train_df = pd.read_parquet(TRAIN_PARQUET,
                                columns=["fips", "date", "label"])
-    val_df   = pd.read_parquet("processed/validation_flat.parquet",
+    val_df   = pd.read_parquet(VAL_PARQUET,
                                columns=["fips", "date", "label"])
 
     train_df = train_df.sort_values(["fips", "date"]).reset_index(drop=True)

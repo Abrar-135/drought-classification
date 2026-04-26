@@ -12,10 +12,13 @@ Pipeline:
   7. Build sliding-window sequences             → LSTM & 1D-CNN
   8. Save sequences as compressed .npz arrays
 
-Outputs (in ./processed/):
+Inputs (read from ./Data/):
+  train_timeseries.csv / validation_timeseries.csv / test_timeseries.csv
+  soil_data.csv
+
+Outputs (written to ./Processed/):
   scaler.pkl
   train_flat.parquet / validation_flat.parquet / test_flat.parquet
-  train_sequences.npz / validation_sequences.npz / test_sequences.npz
 """
 
 import gc
@@ -26,8 +29,9 @@ from pathlib import Path
 from sklearn.preprocessing import StandardScaler
 
 # ── Config ─────────────────────────────────────────────────────────────────────
-DATA_DIR = Path(".")
-OUT_DIR  = Path("processed")
+ROOT_DIR = Path(__file__).resolve().parent
+DATA_DIR = ROOT_DIR / "Data"
+OUT_DIR  = ROOT_DIR / "Processed"
 
 # Days of history fed into LSTM / 1D-CNN per prediction step
 LOOKBACK = 180
@@ -173,7 +177,7 @@ def main():
     print("for lazy window generation during model training.")
 
     print("\nPreprocessing complete.")
-    print(f"Flat files + scaler saved under ./{OUT_DIR}/")
+    print(f"Flat files + scaler saved under {OUT_DIR}/")
 
 
 if __name__ == "__main__":
