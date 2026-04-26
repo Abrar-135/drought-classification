@@ -1,4 +1,5 @@
 import argparse
+import os
 import torch
 import torch.nn as nn
 import numpy as np
@@ -63,9 +64,13 @@ def main():
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
     criterion = nn.CrossEntropyLoss()
 
+    os.makedirs("Results", exist_ok=True)
+    results_path = "Results/lstm_results.txt"
+
     # Training
     print("\n--- Training LSTM ---")
     best_f1 = 0.0
+    epoch_lines = []
     for epoch in range(args.epochs):
         model.train()
         for bx, by in train_loader:
@@ -74,7 +79,9 @@ def main():
             optimizer.step()
 
         f1, mae = evaluate_metrics(model, val_loader, device)
-        print(f"Epoch {epoch+1}/{args.epochs} | Macro-F1: {f1:.4f} | MAE: {mae:.4f}")
+        line = f"Epoch {epoch+1}/{args.epochs} | Macro-F1: {f1:.4f} | MAE: {mae:.4f}"
+        print(line)
+        epoch_lines.append(line)
 
         if f1 > best_f1:
             best_f1 = f1
@@ -84,7 +91,15 @@ def main():
     print("\n--- Final Evaluation ---")
     model.load_state_dict(torch.load("Processed/lstm_best.pt", map_location=device, weights_only=True))
     f1, mae = evaluate_metrics(model, val_loader, device)
-    print(f"Best Macro-F1: {f1:.4f} | MAE: {mae:.4f}")
+    summary = f"Best Macro-F1: {f1:.4f} | MAE: {mae:.4f}"
+    print(summary)
+
+    with open(results_path, "w") as rf:
+        rf.write("--- Training LSTM ---\n")
+        rf.write("\n".join(epoch_lines))
+        rf.write("\n\n--- Final Evaluation ---\n")
+        rf.write(summary + "\n")
+    print(f"Results written to {results_path}")
 
 
 if __name__ == "__main__":

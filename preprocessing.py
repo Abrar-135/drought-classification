@@ -8,8 +8,8 @@ Pipeline:
   3. Forward-fill weekly drought scores to daily within each county
   4. Bin continuous 0-5 score into 6 integer classes (0-5)
   5. Fit StandardScaler on train features only; transform all splits
-  6. Save flat (non-sequential) .parquet files  → baseline & ARIMA
-  7. Build sliding-window sequences             → LSTM & 1D-CNN
+  6. Save flat (non-sequential) .parquet files  -> baseline & ARIMA
+  7. Build sliding-window sequences             -> LSTM & 1D-CNN
   8. Save sequences as compressed .npz arrays
 
 Inputs (read from ./Data/):
@@ -48,6 +48,8 @@ WEATHER_COLS = [
 def load_split(name: str) -> pd.DataFrame:
     """Load one timeseries CSV split and parse dates."""
     path = DATA_DIR / f"{name}_timeseries.csv"
+    if not path.exists():
+        path = DATA_DIR / f"{name}_timeseries" / f"{name}_timeseries.csv"
     df = pd.read_csv(path, parse_dates=["date"])
     df = df.sort_values(["fips", "date"]).reset_index(drop=True)
     return df
@@ -159,7 +161,7 @@ def main():
     scaler_path = OUT_DIR / "scaler.pkl"
     with open(scaler_path, "wb") as f:
         pickle.dump(scaler, f)
-    print(f"  Scaler saved → {scaler_path}")
+    print(f"  Scaler saved -> {scaler_path}")
 
     # ── Save flat (non-sequential) files for baseline models & ARIMA ──────────
     print("\nSaving flat feature files …")
