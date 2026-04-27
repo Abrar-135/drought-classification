@@ -7,6 +7,7 @@ Dataset: 3108 US counties, validation split (2017-01-03 → 2018-12-31)
 OVERALL
 -------
 Accuracy : 0.4851
+MAE      : 0.8538
 Macro F1 : 0.1884
 
 PER-CLASS

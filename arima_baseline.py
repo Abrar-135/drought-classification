@@ -28,7 +28,7 @@ from pathlib import Path
 from joblib import Parallel, delayed
 from statsmodels.tsa.arima.model import ARIMA
 from sklearn.metrics import (
-    accuracy_score, f1_score, classification_report
+    accuracy_score, f1_score, classification_report, mean_absolute_error
 )
 
 warnings.filterwarnings("ignore")   # suppress ARIMA convergence noise
@@ -142,10 +142,12 @@ def main(sample: int | None = None):
         county_acc = accuracy_score(truth[:n], preds[:n])
         county_f1  = f1_score(truth[:n], preds[:n], average="macro",
                               zero_division=0)
+        county_mae = mean_absolute_error(truth[:n], preds[:n])
         result_rows.append({
             "fips":     fips,
             "accuracy": round(county_acc, 4),
             "macro_f1": round(county_f1, 4),
+            "mae":      round(county_mae, 4),
             "n_days":   n,
         })
 
@@ -156,6 +158,8 @@ def main(sample: int | None = None):
     overall_acc = accuracy_score(all_true, all_preds)
     overall_f1  = f1_score(all_true, all_preds, average="macro",
                            zero_division=0)
+    overall_mae = mean_absolute_error(all_true, all_preds)
+    
 
     print("\n" + "=" * 60)
     print("ARIMA BASELINE — VALIDATION RESULTS")
@@ -163,6 +167,7 @@ def main(sample: int | None = None):
     print(f"  Counties fitted : {len(result_rows)}")
     print(f"  Counties failed : {n_failed}")
     print(f"  Overall accuracy: {overall_acc:.4f}")
+    print(f"  Overall MAE     : {overall_mae:.4f}")
     print(f"  Macro F1        : {overall_f1:.4f}")
     print()
     print(classification_report(
@@ -176,7 +181,7 @@ def main(sample: int | None = None):
     results_df = pd.DataFrame(result_rows)
     results_df.to_csv(RESULTS_FILE, index=False)
     print(f"Per-county results saved → {RESULTS_FILE}")
-    print(f"\nOverall accuracy: {overall_acc:.4f}  |  Macro F1: {overall_f1:.4f}")
+    print(f"\nOverall accuracy: {overall_acc:.4f}  |  Overall MAE: {overall_mae:.4f}  |  Macro F1: {overall_f1:.4f}")
 
 
 if __name__ == "__main__":
