@@ -1,62 +1,18 @@
-k = 1:
-    Validation Year 2008 | Macro-F1: 0.1855 | MAE: 0.7239
-    Validation Year 2009 | Macro-F1: 0.2394 | MAE: 0.1657
-    Validation Year 2010 | Macro-F1: 0.1489 | MAE: 0.7339
-    Validation Year 2011 | Macro-F1: 0.2076 | MAE: 0.7387
+============================================================
+1D CNN — TEST RESULTS
+============================================================
+  Overall MAE     : 0.3123
+  Macro F1        : 0.2967
 
-    --- Final Evaluation on Test Set (2012-2020) ---
-    OVERALL TEST RESULTS | Macro-F1: 0.1397 | MAE: 1.1049
+              precision    recall  f1-score   support
 
-k = 2:
-    Validation Year 2008 | Macro-F1: 0.1832 | MAE: 0.7124
-    Validation Year 2009 | Macro-F1: 0.2698 | MAE: 0.1741
-    Validation Year 2010 | Macro-F1: 0.1483 | MAE: 0.7400
-    Validation Year 2011 | Macro-F1: 0.2122 | MAE: 0.7037
+      D-None       0.84      0.96      0.90   1343663
+          D0       0.26      0.07      0.10    206668
+          D1       0.27      0.16      0.20    104954
+          D2       0.24      0.29      0.26     43497
+          D3       0.30      0.35      0.32     12465
+          D4       0.00      0.00      0.00      1261
 
-    --- Final Evaluation on Test Set (2012-2020) ---
-    OVERALL TEST RESULTS | Macro-F1: 0.1540 | MAE: 1.0878
-
-k = 3:
-    Validation Year 2008 | Macro-F1: 0.1868 | MAE: 0.6725
-    Validation Year 2009 | Macro-F1: 0.2617 | MAE: 0.1493
-    Validation Year 2010 | Macro-F1: 0.1490 | MAE: 0.7391
-    Validation Year 2011 | Macro-F1: 0.2116 | MAE: 0.6950
-
-    --- Final Evaluation on Test Set (2012-2020) ---
-    OVERALL TEST RESULTS | Macro-F1: 0.1548 | MAE: 1.0367
-
-k = 4:
-    Validation Year 2008 | Macro-F1: 0.1885 | MAE: 0.6573
-    Validation Year 2009 | Macro-F1: 0.3014 | MAE: 0.1828
-    Validation Year 2010 | Macro-F1: 0.1475 | MAE: 0.7465
-    Validation Year 2011 | Macro-F1: 0.2137 | MAE: 0.6631
-
-    --- Final Evaluation on Test Set (2012-2020) ---
-    OVERALL TEST RESULTS | Macro-F1: 0.1505 | MAE: 1.0415
-
-k = 5:
-    Validation Year 2008 | Macro-F1: 0.1832 | MAE: 0.7156
-    Validation Year 2009 | Macro-F1: 0.3239 | MAE: 0.1612
-    Validation Year 2010 | Macro-F1: 0.1465 | MAE: 0.7487
-    Validation Year 2011 | Macro-F1: 0.2024 | MAE: 0.6963
-
-    --- Final Evaluation on Test Set (2012-2020) ---
-    OVERALL TEST RESULTS | Macro-F1: 0.1550 | MAE: 1.0074
-    
-k = 7:
-    Validation Year 2008 | Macro-F1: 0.1795 | MAE: 0.6181
-    Validation Year 2009 | Macro-F1: 0.2471 | MAE: 0.1503
-    Validation Year 2010 | Macro-F1: 0.1473 | MAE: 0.7423
-    Validation Year 2011 | Macro-F1: 0.1995 | MAE: 0.6828
-
-    --- Final Evaluation on Test Set (2012-2020) ---
-    OVERALL TEST RESULTS | Macro-F1: 0.1541 | MAE: 1.0032
-
-k = 10:
-    Validation Year 2008 | Macro-F1: 0.1847 | MAE: 0.6596
-    Validation Year 2009 | Macro-F1: 0.2628 | MAE: 0.1583
-    Validation Year 2010 | Macro-F1: 0.1465 | MAE: 0.7391
-    Validation Year 2011 | Macro-F1: 0.2146 | MAE: 0.7043
-
-    --- Final Evaluation on Test Set (2012-2020) ---
-    OVERALL TEST RESULTS | Macro-F1: 0.1458 | MAE: 1.0914
+    accuracy                           0.78   1712508
+   macro avg       0.32      0.30      0.30   1712508
+weighted avg       0.72      0.78      0.74   1712508

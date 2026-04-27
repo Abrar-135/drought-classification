@@ -43,10 +43,10 @@ OUT_DIR = Path("processed")
 class CNNDroughtModel(nn.Module):
     def __init__(self):
         super().__init__()
-        self.conv1 = nn.Conv1d(49, 32, 2) # 49 is len(FEATURE_COLS) but that crashes
+        self.conv1 = nn.Conv1d(49, 48, 2) # 49 is len(FEATURE_COLS) but that crashes
         self.pool = nn.MaxPool1d(2)
         self.adaptive_pooling = nn.AdaptiveAvgPool1d(1)
-        self.fc1 = nn.Linear(32, 32)
+        self.fc1 = nn.Linear(48, 32)
         self.dropout = nn.Dropout(0.2)
         self.fc2 = nn.Linear(32, 6) 
 
@@ -123,7 +123,7 @@ def train_model(device: torch.device, sample: int | None = None):
         # Training Portion
         # running_loss = 0.0
         model.train()
-        for X_batch, y_batch in train_loader:
+        for X_batch, y_batch in tqdm(train_loader):
             X_batch, y_batch = X_batch.to(device), y_batch.to(device)
             optimizer.zero_grad()
 
@@ -198,6 +198,7 @@ def main(state_path : str | None = None, sample: int | None = None):
             all_true.extend(y_batch.tolist())
         
     # Overall Metrics
+    overall_acc = mean_absolute_error(all_true, all_preds)
     overall_mae = mean_absolute_error(all_true, all_preds)
     overall_f1  = f1_score(all_true, all_preds, average="macro",
                             zero_division=0)
@@ -205,6 +206,7 @@ def main(state_path : str | None = None, sample: int | None = None):
     print("\n" + "=" * 60)
     print("1D CNN — TEST RESULTS")
     print("=" * 60)
+    print(f"  Overall MAE     : {overall_acc:.4f}")
     print(f"  MAE             : {overall_mae:.4f}")
     print(f"  Macro F1        : {overall_f1:.4f}")
     print()
@@ -228,3 +230,4 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
     main(state_path=args.state_path, sample=args.sample)
+    
