@@ -15,6 +15,7 @@ statsmodels>=0.14.0
 # Deep learning (LSTM & 1D-CNN)
 torch>=2.3.0
 torchvision>=0.18.0
+optuna>=4.4.0
 
 # Jupyter notebooks
 jupyter>=1.0.0
