@@ -32,7 +32,6 @@ from torch.utils.data import DataLoader, Subset
 from sklearn.metrics import mean_absolute_error, f1_score, classification_report
 
 # Config
-# TODO: adjust hyperparameters here + model for best results
 MAX_EPOCHS = 25
 BATCH_SIZE = 256
 LEARNING_RATE = 0.001
