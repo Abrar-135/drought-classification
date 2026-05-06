@@ -29,7 +29,7 @@ import optuna
 
 OUT_DIR = Path("processed")
 NUM_WORKERS = 0 
-MAX_EPOCHS = 1
+MAX_EPOCHS = 25
 
 
 class CNNDroughtModel(nn.Module):

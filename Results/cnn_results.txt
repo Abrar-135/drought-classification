@@ -16,3 +16,32 @@
     accuracy                           0.78   1712508
    macro avg       0.32      0.30      0.30   1712508
 weighted avg       0.72      0.78      0.74   1712508
+
+
+
+============================================================
+1D CNN — TEST RESULTS HYPERPARMETER OPTIMIZED RESULTS
+============================================================
+
+★ Optimization Complete! Best Hyperparameters:
+  lr: 0.007326588293865377
+  batch_size: 128
+  out_channels: 112
+  fc1_units: 128
+  dropout_rate: 0.30382452585225106
+
+  MAE              : 0.3603
+  Macro F1         : 0.2740
+
+              precision    recall  f1-score   support
+
+      D-None       0.87      0.91      0.89   1343663
+          D0       0.27      0.15      0.19    206668
+          D1       0.23      0.20      0.21    104954
+          D2       0.16      0.27      0.20     43497
+          D3       0.13      0.17      0.15     12465
+          D4       0.00      0.00      0.00      1261
+
+    accuracy                           0.75   1712508
+   macro avg       0.28      0.28      0.27   1712508
+weighted avg       0.73      0.75      0.74   1712508
